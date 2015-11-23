@@ -6,9 +6,9 @@
         "default": {
             "outputSourceFiles": true
         },
-        "systemName"      : "<%= appName =>",
+        "systemName"      : "<%= appName %>",
         "footer"          : "",
-        "copyright"       : "<%= appName => Copyright © 2014-2015",
+        "copyright"       : "<%= appName %> Copyright © 2014-2015",
         "navType"         : "vertical",
         "theme"           : "flatly",
         "linenums"        : true,

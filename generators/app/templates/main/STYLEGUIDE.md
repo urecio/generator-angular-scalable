@@ -1,0 +1,3 @@
+# <%= appName %> Styleguide
+
+## Welcome!
