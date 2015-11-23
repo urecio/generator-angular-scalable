@@ -1,0 +1,77 @@
+<!doctype html>
+<html class="no-js" ng-app="<%= appName %>">
+  <head>
+    <meta charset="utf-8">
+    <title><%= appName %></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <meta name="fragment" content="!">
+    <base href="/"/>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css({app,.}) assets/styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/ionicons/css/ionicons.css" />
+    <link rel="stylesheet" href="bower_components/ngToast/dist/ngToast.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css(.tmp) assets/styles/main.css -->
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+      <div id="container-view" ui-view></div>
+      <toast></toast>
+    <!--[if lte IE 9]>
+    <!-- build:js(.) scripts/shim.js -->
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="//cdn.jsdelivr.net/json3/3.3.2/json3.min.js"></script>
+    <!-- endbuild -->
+    <!-- [endif]-->
+
+    <!-- build:js({app,.}) scripts/main.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/SHA-1/sha1.js"></script>
+    <script src="bower_components/placeholders/dist/placeholders.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular-cache/dist/angular-cache.js"></script>
+    <script src="bower_components/restangular/dist/restangular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/ngToast/dist/ngToast.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({.tmp,app,.}) scripts/scripts.js -->
+    <!-- Components -->
+    <!-- home -->
+    <script src="components/home/home.js"></script>
+    <!-- end home -->
+    <!-- homeLayout -->
+    <script src="components/home-layout/home-layout.js"></script>
+    <!-- end homeLayout -->
+    <!-- end Components -->
+    <!-- Commons -->
+    <!-- cache -->
+    <script src="common/cache/cache.js"></script>
+    <script src="common/cache/factories/cache-factory.js"></script>
+    <!-- end cache -->
+    <!-- env -->
+    <script src="common/env/env.js"></script>
+    <!-- end env -->
+    <!-- error -->
+    <script src="common/error/error.js"></script>
+    <script src="common/error/controllers/error-controller.js"></script>
+    <!-- end error -->
+    <!-- end Commons -->
+    <script src="common/app/app.js"></script>
+    <!-- endbuild -->
+
+</body>
+</html>

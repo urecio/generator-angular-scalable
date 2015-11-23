@@ -49,7 +49,7 @@ var jwtClient = new google.auth.JWT(
   'verusgoogle.pem',
   null,
   ['https://www.googleapis.com/auth/drive.readonly'],
-  'office@verusdaat.com');
+  '<%= emailGoogle %>');
 
 /**
  * Ask google for authorization to connect

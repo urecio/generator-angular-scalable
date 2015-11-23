@@ -6,9 +6,9 @@
         "default": {
             "outputSourceFiles": true
         },
-        "systemName"      : "Verusdaat",
+        "systemName"      : "<%= appName =>",
         "footer"          : "",
-        "copyright"       : "Verusdaat Copyright © 2014-2015",
+        "copyright"       : "<%= appName => Copyright © 2014-2015",
         "navType"         : "vertical",
         "theme"           : "flatly",
         "linenums"        : true,

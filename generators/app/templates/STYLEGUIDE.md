@@ -1,3 +1,3 @@
-# Veruscript Styleguide
+# <%= appName => Styleguide
 
 ## Welcome!
