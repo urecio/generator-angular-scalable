@@ -1,4 +1,4 @@
-# generator-angular-scalable [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# generator-angular-scalable [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > Scaffolding for large apps
 
 ## Installation
@@ -27,7 +27,5 @@ BSD-2-Clause-FreeBSD © [Unai Recio](mydeveloperlife.com)
 
 [npm-image]: https://badge.fury.io/js/generator-angular-scalable.svg
 [npm-url]: https://npmjs.org/package/generator-angular-scalable
-[travis-image]: https://travis-ci.org/urecio/generator-angular-scalable.svg?branch=master
-[travis-url]: https://travis-ci.org/urecio/generator-angular-scalable
 [daviddm-image]: https://david-dm.org/urecio/generator-angular-scalable.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/urecio/generator-angular-scalable
