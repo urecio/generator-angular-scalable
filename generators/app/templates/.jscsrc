@@ -1,0 +1,6 @@
+{
+  "preset": "google",
+  "validateIndentation": 2,
+  "excludeFiles":["node_modules/**","*/templates.js"],
+  "maximumLineLength": 200
+}

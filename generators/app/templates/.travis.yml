@@ -1,0 +1,33 @@
+language: node_js
+node_js:
+- 0.12.2
+- '0.12'
+addons:
+  sauce_connect: true
+env:
+  global:
+  - secure: D9JlLQwkCvxZm6zHC8phMNUxK2THTZjqNW83JM5OGY8RbWWN5nEFP9lx8cvH0sFrFa9tptpOtk0TGD8oF0DdTA4LI8HYOBk+MnEAWlzJTnbL3EgseDJRRW6GZ6GXdigYjOl7cOFOl3HqEXoHB++0rtaxVTETChwl4ry8qKhLCfw=
+  - secure: iEyYhB1RIIURDjNjOrqogoHFi/BQMGipCqWak/upYZnU5Hjev5kTyO2A4cxBesz8lfJ+RGpnaMGr4BnW3iW4RBy6c0IuD675r2huRlS+2eQdOj6Bs4hmZUxBWWTteXPIKvv/gFH+qNJtz0XZTX2hgPOvTaPfbKECfeRXVwGhkCE=
+  - secure: Tsp8TWVFz0097hXhC9xmOie9bgUD3cX9aL80+rWqG/4L/zd+QkNLQWs7YF2SYtVZgMzXoDc8CdvJtkE2Y9RekGcbFhWPs9wgquTclPKDfnMaSe1xpMp9BM5b7gVmsz59PVloYHovhypgdV5e4XQiq7iT1M0eGSb2CazCvD3tXAM=
+  - secure: YAgDNP/qjMrrFxLit8HOyY6YU9CIYQXk6fXwPDy/95ovHQpLLlsnL/14+i+2pDgMrx+yMbsYP58glweqrEg4JsxiApaqtvpXpbe5fPwrpX9yDIFgkRy/zbV3tv8otmmvGn8WVzocFQ5hpPc6i2m+jaEalNcFZm3Ea8Csq2wLGzw=
+  - secure: ZIly1BllhguCjqcd/hkLFa2cfXMdTiOgcbgy9INFaWj7FF5X/IL5l0xiUtJREbWwJ050WSKl2iegUaspU8JaipZFr9PwK0B969Ulq+Bfaj1EC4dG9KB5z/QLYofibms8J0fIjcWQYIhOEPo5iXs47KLn4PbbFcgaOBC9AKnuSgk=
+  - secure: GYCwdnzcA41fFMk51y5r2kT6DF44a3Q228Cd61lswVeVFvDxQZQYUj2juBbPe82kWGiGP66bgzX3kljn7D1VHdIcHLiil8dm9U3xCwwSPem5HWGT7/NFFN/Z3dBnSVQI5IRc2pOLapE+MtaS98uQpxaCsKByQHIx/DLCc+bDajg=
+branches:
+  only:
+  - master
+  - develop
+before_install:
+- npm install -g npm@latest
+- npm i -g grunt-cli bower
+- npm i -g mocha
+- gem install compass travis --no-rdoc --no-ri
+- travis login --pro --skip-completion-check --github-token ${GH_TOKEN}
+install:
+- npm i
+after_success:
+- if [ "master" != $TRAVIS_BRANCH ]; then exit 0; fi;
+- npm i -g http://52.17.136.143:8080/package/verusdaat2-deployment/latest
+- verusdaat deploy -e VP-FrontEnd-Alpha -a VP-FrontEnd -n
+notifications:
+  slack:
+    secure: IyrE/5Ge4thb32wZ740KPD6rLwCj/Ti97qhmEoSULvFkNZ9mG1Rlv6ghWz/MkEeySsEAEGwgEguQ6e9ZMat/UZsT+zxHKR17Ai9X5s78Ugo1mP931T6h3ZFdpmmw5w9s49W2kF/cXBYEEba9ktaCQrvaYohFVqeGJzF2MmYlyZI=
