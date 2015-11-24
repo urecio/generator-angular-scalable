@@ -2,6 +2,8 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var fs = require('fs');
+var glob = require('glob');
+var _ = require('lodash');
 
 promptModuleName = {
   type: 'string',
@@ -24,28 +26,48 @@ module.exports = {
   },
   subModuleWritting: function(){
 
-    function copyTemplate() {
-      this.fs.copyTpl(
-        this.templatePath('**/*'),
-        this.destinationPath(base)
-      );
+
+    function replaceCopiedFiles (generator) {
+      glob.sync(generator.templatePath('**/*')).forEach(function (file) {
+        var lastUrlPart = file.substr(file.indexOf('templates') + 'templates'.length);
+        var fileToReplace = generator.destinationPath(base) + lastUrlPart;
+        var fileReplaced = fileToReplace.replace(/%.*%/g, function (a,b,c) {
+          var varFromMatch = _.camelCase(a.substr(1, a.length - 2));
+          return generator.config.get(varFromMatch) || generator.props[varFromMatch];
+        });
+        fs.rename(fileToReplace, fileReplaced);
+      });
+    }
+
+    function copyAndProcessEjsOnFileNames (generator) {
+      copyTemplate.call(generator);
+    }
+
+    function copyTemplate(generator) {
+      generator.template (
+        generator.templatePath('**/*'),
+        generator.destinationPath(base),
+        {appName: generator.config.get('appName'), moduleName: generator.config.get('moduleName')}
+      ).on('end', function () {
+        replaceCopiedFiles(generator);
+      });
     };
 
     var base = (this.props.isCommon ? 'common/' : 'components/') + this.props.moduleName + '/';
 
     // if the module subgenerator is being runned, it's not needed to check if the path exists, because the main module files will be created anyways
-    if(this.templatePath().indexOf('modules') !== -1) copyTemplate.call(this);
+    if(this.templatePath().indexOf('modules') !== -1) copyTemplate(this);
     else {
 
       try {// if the path doesn't exists, it needs basic module configuration
         var fsBasePath = fs.lstatSync(base);
       } catch (err) {
         this.fs.copyTpl(
-          this.templatePath('../../module/*'),
+          this.templatePath('../../module/templates'),
           this.destinationPath(base)
         );
       } finally {
-        copyTemplate.call(this);
+        copyTemplate(this);
       }
 
     }
@@ -56,6 +78,12 @@ module.exports = {
       name: 'isCommon',
       message: 'Is it a common module?',
       default: false
+    },
+    {
+      type: 'string',
+      name: 'componentName',
+      message: 'What\'s the name of this component?',
+      optional: false,
     },
     promptModuleName];
 
