@@ -10,19 +10,17 @@
  */
 angular
 .module('<%= appName %>', [
-    'ngSanitize',
+  'ngSanitize',
 
-    /* COMMONS */
-    '<%= appName %>.error',
-    '<%= appName %>.cache',
-    /* END COMMONS */
+  /* COMMONS */
+  '<%= appName %>.cache',
+  /* END COMMONS */
 
-    /* COMPONENTS */
-    '<%= appName %>.home',
-    /* END COMPONENTS */
-    ])
+  /* COMPONENTS */
+  '<%= appName %>.home',
+  /* END COMPONENTS */
+  ])
   .config(function($urlRouterProvider, $locationProvider) {
-
     $urlRouterProvider.otherwise('/');
 
     $locationProvider.html5Mode(false);

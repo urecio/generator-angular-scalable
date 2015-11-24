@@ -28,8 +28,14 @@ module.exports = {
 
   subModuleWritting: function(extraContextData) {
 
-    function replaceCopiedFiles (generator) {
-      glob.sync(generator.templatePath('**/*')).forEach(function (file) {
+    var contextData = {appName: this.config.get('appName'),
+                      moduleName: this.props.moduleName,
+                      componentName: this.props.componentName};
+
+    var base = (this.props.isCommon ? 'common/' : 'components/') + this.props.moduleName;
+
+    function replaceCopiedFiles (generator, templatePath) {
+      glob.sync(generator.templatePath(templatePath)).forEach(function (file) {
         var lastUrlPart = file.substr(file.indexOf('templates') + 'templates'.length);
         var fileToReplace = generator.destinationPath(base) + lastUrlPart;
         var fileReplaced = fileToReplace.replace(/%.*%/g, function (a,b,c) {
@@ -40,26 +46,24 @@ module.exports = {
       });
     }
 
-    function copyAndProcessEjsOnFileNames (generator) {
-      copyTemplate.call(generator);
+    function copyAndReplaceFileNames(generator, templatePath, destinationPath) {
+      generator.template (
+        generator.templatePath(templatePath),
+        generator.destinationPath(destinationPath || base),
+        contextData
+      ).on('end', function () {
+        replaceCopiedFiles(generator, templatePath);
+      });
     }
 
     function copyTemplate(generator) {
-      var contextData = {appName: generator.config.get('appName'),
-                        moduleName: generator.props.moduleName,
-                        componentName: generator.props.componentName};
       _.extend(contextData, extraContextData);
-      
-      generator.template (
-        generator.templatePath('**/*'),
-        generator.destinationPath(base),
-        contextData
-      ).on('end', function () {
-        replaceCopiedFiles(generator);
-      });
+      copyAndReplaceFileNames(generator, '**/*', null);
     };
 
-    var base = (this.props.isCommon ? 'common/' : 'components/') + this.props.moduleName + '/';
+
+
+    //exec
 
     // if the module subgenerator is being runned, it's not needed to check if the path exists, because the main module files will be created anyways
     if(this.templatePath().indexOf('modules') !== -1) copyTemplate(this);
@@ -68,10 +72,7 @@ module.exports = {
       try {// if the path doesn't exists, it needs basic module configuration
         var fsBasePath = fs.lstatSync(base);
       } catch (err) {
-        this.fs.copyTpl(
-          this.templatePath('../../module/templates'),
-          this.destinationPath(base)
-        );
+        copyAndReplaceFileNames(this, '../../module/templates/*', null);
       } finally {
         copyTemplate(this);
       }

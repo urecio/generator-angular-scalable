@@ -17,6 +17,6 @@
   }
 
   angular.module('<%= appName %>.<%= moduleName %>')
-    .filter('<%= componentName %>',<%= classedName %>Filter);
+    .filter('<%= componentName %>',<%= componentName %>Filter);
 
 })();

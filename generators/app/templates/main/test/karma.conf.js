@@ -54,7 +54,6 @@ module.exports = function(config) {
       'bower_components/angular-cache/dist/angular-cache.min.js',
       'bower_components/restangular/dist/restangular.min.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
-      'bower_components/karma-read-json/karma-read-json.js',
       'bower_components/ngToast/dist/ngToast.min.js',
       // endbower
 

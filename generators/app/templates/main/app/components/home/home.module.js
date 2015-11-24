@@ -4,7 +4,6 @@
  * Home module.
  * @ngdoc overview
  * @name Home
- * @requires  angucomplete-alt.cfpLoadingBarProvider
  * @description
  *
  * # Main module of the feature.
@@ -17,13 +16,11 @@
     $stateProvider
       .state('home', {
         url:'/',
-        templateUrl: 'components/home/views/home-view.html',
+        templateUrl: 'components/home/views/home.view.html',
       });
   }
 
-  angular.module('<%= appName %>home', [
-    'ui.router',
-    '<%= appName %>api'
-  ])
-    .config(home);
+  angular.module('<%= appName %>.home', [
+    'ui.router'
+  ]).config(home);
 })();

@@ -10,10 +10,10 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css({app,.}) assets/styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/ionicons/css/ionicons.css" />
     <link rel="stylesheet" href="bower_components/ngToast/dist/ngToast.css" />
     <!-- endbower -->
     <!-- endbuild -->
+    <!--  -->
 
     <!-- build:css(.tmp) assets/styles/main.css -->
     <link rel="stylesheet" href="assets/styles/main.css">
@@ -28,7 +28,6 @@
     <!--[if lte IE 9]>
     <!-- build:js(.) scripts/shim.js -->
     <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="//cdn.jsdelivr.net/json3/3.3.2/json3.min.js"></script>
     <!-- endbuild -->
     <!-- [endif]-->
 
@@ -36,41 +35,33 @@
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/SHA-1/sha1.js"></script>
     <script src="bower_components/placeholders/dist/placeholders.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/angular-cache/dist/angular-cache.js"></script>
     <script src="bower_components/restangular/dist/restangular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/json3/lib/json3.js"></script>
-    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
     <script src="bower_components/ngToast/dist/ngToast.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app,.}) scripts/scripts.js -->
     <!-- Components -->
     <!-- home -->
-    <script src="components/home/home.js"></script>
+    <script src="components/home/assets/vendor/html5shiv.js"></script>
+    <script src="components/home/assets/vendor/respond.min.js"></script>
+    <script src="components/home/home.module.js"></script>
     <!-- end home -->
-    <!-- homeLayout -->
-    <script src="components/home-layout/home-layout.js"></script>
-    <!-- end homeLayout -->
     <!-- end Components -->
     <!-- Commons -->
     <!-- cache -->
-    <script src="common/cache/cache.js"></script>
-    <script src="common/cache/factories/cache-factory.js"></script>
+    <script src="common/cache/cache.module.js"></script>
+    <script src="common/cache/factories/cache.factory.js"></script>
     <!-- end cache -->
     <!-- env -->
     <script src="common/env/env.js"></script>
     <!-- end env -->
-    <!-- error -->
-    <script src="common/error/error.js"></script>
-    <script src="common/error/controllers/error-controller.js"></script>
-    <!-- end error -->
     <!-- end Commons -->
-    <script src="common/app/app.js"></script>
+    <script src="common/app/app.module.js"></script>
     <!-- endbuild -->
 
 </body>

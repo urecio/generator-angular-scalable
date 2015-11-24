@@ -3,14 +3,14 @@
 /**
  * Karma unit tests.
  */
-describe('<%= componentName %>Factory', function(){
+describe('<%= componentName %>Service', function(){
 
-  var <%=componentName%>factory;
+  var <%= componentName %>service;
 
   beforeEach(module('<%= appName %>.<%= moduleName %>'));
 
   beforeEach(inject(function($injector) {
-    <%= componentName %>factory = $injector.get('<%= componentName %>');
+    service = $injector.get('<%= componentName %>');
   }));
 
 });
