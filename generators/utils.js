@@ -24,8 +24,9 @@ module.exports = {
       'Welcome to the jungle and have fun with the ' + chalk.red('generator-angular-scalable') + ' generator!'
     ));
   },
-  subModuleWritting: function(){
 
+
+  subModuleWritting: function(extraContextData) {
 
     function replaceCopiedFiles (generator) {
       glob.sync(generator.templatePath('**/*')).forEach(function (file) {
@@ -44,10 +45,15 @@ module.exports = {
     }
 
     function copyTemplate(generator) {
+      var contextData = {appName: generator.config.get('appName'),
+                        moduleName: generator.props.moduleName,
+                        componentName: generator.props.componentName};
+      _.extend(contextData, extraContextData);
+      
       generator.template (
         generator.templatePath('**/*'),
         generator.destinationPath(base),
-        {appName: generator.config.get('appName'), moduleName: generator.config.get('moduleName')}
+        contextData
       ).on('end', function () {
         replaceCopiedFiles(generator);
       });
@@ -72,6 +78,8 @@ module.exports = {
 
     }
   },
+
+
   createBasicSubPrompts: function () {
     var prompts = [{
       type: 'confirm',

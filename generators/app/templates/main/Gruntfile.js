@@ -192,6 +192,22 @@ module.exports = function(grunt) {
       sass: {
         src: ['<%%= yeoman.app %>{,*/}*.{scss,sass}'],
         ignorePath: /\.\.\.\//
+      },
+      testKarma: {
+          src: ['test/karma.conf.js'],
+          fileTypes: {
+            js: {
+              block: /(([\s\t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
+              detect: {
+                js: /'(.*\.js)'/gi
+              },
+              replace: {
+                js: '\'{{filePath}}\','
+              }
+            }
+          },
+          devDependencies: true,
+          exclude: [/jasmine/]
       }
     },
     /* STYLES SECTION */
