@@ -13,7 +13,18 @@ npm install -g generator-angular-scalable
 Then generate your new project:
 
 ```bash
-yo generator-angular-scalable
+yo angular-scalable
+```
+
+Available subgenerators:
+
+```bash
+yo angular-scalable:directive
+yo angular-scalable:directive
+yo angular-scalable:directive
+yo angular-scalable:directive
+yo angular-scalable:directive
+yo angular-scalable:directive
 ```
 
 ## Getting To Know Yeoman
