@@ -19,12 +19,13 @@ yo angular-scalable
 Available subgenerators:
 
 ```bash
+yo angular-scalable:module
+yo angular-scalable:controller
 yo angular-scalable:directive
-yo angular-scalable:directive
-yo angular-scalable:directive
-yo angular-scalable:directive
-yo angular-scalable:directive
-yo angular-scalable:directive
+yo angular-scalable:view
+yo angular-scalable:filter
+yo angular-scalable:factory
+yo angular-scalable:service
 ```
 
 ## Getting To Know Yeoman
