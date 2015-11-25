@@ -46,4 +46,4 @@ gulp.task('test', ['pre-test'], function (cb) {
 gulp.task('prepublish', ['nsp']);
 gulp.task('default', ['static', 'test']);
 
-require('gulp-release-tasks')(gulp);
+require('gulp-release-it')(gulp);

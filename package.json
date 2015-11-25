@@ -31,7 +31,7 @@
     "gulp-mocha": "^2.0.0",
     "gulp-nsp": "^2.1.0",
     "gulp-plumber": "^1.0.0",
-    "gulp-release-tasks": "0.0.3",
+    "gulp-release-it": "^1.0.6",
     "yeoman-assert": "^2.0.0"
   },
   "repository": "urecio/generator-angular-scalable",
