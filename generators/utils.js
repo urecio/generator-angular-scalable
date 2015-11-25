@@ -32,7 +32,7 @@ module.exports = {
                       moduleName: this.props.moduleName,
                       componentName: this.props.componentName};
 
-    var base = (this.props.isCommon ? 'common/' : 'components/') + this.props.moduleName;
+    var base = 'app/' + (this.props.isCommon ? 'common/' : 'components/') + this.props.moduleName;
 
     function replaceCopiedFiles (generator, templatePath) {
       glob.sync(generator.templatePath(templatePath)).forEach(function (file) {
@@ -61,12 +61,10 @@ module.exports = {
       copyAndReplaceFileNames(generator, '**/*', null);
     };
 
-
-
     //exec
 
     // if the module subgenerator is being runned, it's not needed to check if the path exists, because the main module files will be created anyways
-    if(this.templatePath().indexOf('modules') !== -1) copyTemplate(this);
+    if(this.templatePath().indexOf('module') !== -1) copyTemplate(this);
     else {
 
       try {// if the path doesn't exists, it needs basic module configuration
