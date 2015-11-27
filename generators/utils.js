@@ -4,6 +4,7 @@ var yosay = require('yosay');
 var fs = require('fs');
 var glob = require('glob');
 var _ = require('lodash');
+var strUtils = require('./string-utils');
 
 promptModuleName = {
   type: 'string',
@@ -38,9 +39,10 @@ module.exports = {
       glob.sync(generator.templatePath(templatePath)).forEach(function (file) {
         var lastUrlPart = file.substr(file.indexOf('templates') + 'templates'.length);
         var fileToReplace = generator.destinationPath(base) + lastUrlPart;
-        var fileReplaced = fileToReplace.replace(/%.*%/g, function (a,b,c) {
-          var varFromMatch = _.camelCase(a.substr(1, a.length - 2));
-          return generator.config.get(varFromMatch) || generator.props[varFromMatch];
+        // replaces fileName content inside %%
+        var fileReplaced = fileToReplace.replace(/%.*%/g, function (a) {
+          var toReplace = _.camelCase(a.substr(1, a.length - 2));
+          return strUtils.dasherize(generator.config.get(toReplace) || generator.props[toReplace]);
         });
         fs.rename(fileToReplace, fileReplaced);
       });
