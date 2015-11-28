@@ -64,6 +64,10 @@ module.exports = function(grunt) {
         '.tmp/assets/styles/{,*/}*.css',
         '<%%= yeoman.app %>assets/images/{,*/*}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      },
+      includeScripts: {
+        files: ['**/*.js', '.tmp/**/*.css', '**/*.scss', 'index.html'],
+        tasks: ['includeSource']
       }
     },
     // The actual grunt server settings
@@ -257,7 +261,7 @@ module.exports = function(grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%%= yeoman.app %>index.html',
+      html: '<%%= yeoman.dist %>index.html',
       options: {
         dest: '<%%= yeoman.dist %>',
         flow: {
@@ -463,6 +467,19 @@ module.exports = function(grunt) {
     /*
     		 ***************************** END NGDOCS TASKS *****************************
     		 */
+    /**
+     * INCLUDE AUTOMATICALLY SCRIPTS FROM COMMON AND COMPONENTS INTO INDEX
+     */
+     includeSource: {
+       mainTarget: {
+         files: {
+           'index.html': 'index.html'
+         }
+       }
+     },
+    /**
+     * END INCLUDE
+     */
     ngconstant: {
       options: {
         name: '<%= appName %>.env',
