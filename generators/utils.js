@@ -5,6 +5,10 @@ var fs = require('fs');
 var glob = require('glob');
 var _ = require('lodash');
 var strUtils = require('./string-utils');
+var base;
+var contextData;
+
+// TODO: generator arguments everywhere should be optional. A better way to handle this could be to have a "Global" variable
 
 promptModuleName = {
   type: 'string',
@@ -26,55 +30,69 @@ module.exports = {
     ));
   },
 
+  calculateBase: function (generator) {
+    return 'app/' + (generator.props.isCommon ? 'common/' : 'components/') + generator.props.moduleName;
+  },
+  createBasicContextData: function (generator) {
+    return {appName: generator.config.get('appName'),
+            moduleName: generator.props.moduleName,
+            componentName: generator.props.componentName};
+  },
 
-  subModuleWritting: function(extraContextData) {
+  copyAndReplaceFileNames: function (generator, templatePath, destinationPath) {
 
-    var contextData = {appName: this.config.get('appName'),
-                      moduleName: this.props.moduleName,
-                      componentName: this.props.componentName};
+    var self = this;
 
-    var base = 'app/' + (this.props.isCommon ? 'common/' : 'components/') + this.props.moduleName;
+    contextData = contextData || this.createBasicContextData(generator);
+    base = base || this.calculateBase(generator);
 
-    function replaceCopiedFiles (generator, templatePath) {
-      glob.sync(generator.templatePath(templatePath)).forEach(function (file) {
-        var lastUrlPart = file.substr(file.indexOf('templates') + 'templates'.length);
-        var fileToReplace = generator.destinationPath(base) + lastUrlPart;
-        // replaces fileName content inside %%
-        var fileReplaced = fileToReplace.replace(/%.*%/g, function (a) {
-          var toReplace = _.camelCase(a.substr(1, a.length - 2));
-          return strUtils.dasherize(generator.config.get(toReplace) || generator.props[toReplace]);
-        });
-        fs.rename(fileToReplace, fileReplaced);
+    generator.template (
+      generator.templatePath(templatePath),
+      generator.destinationPath(destinationPath || base),
+      contextData
+    ).on('end', function () {
+      self.replaceCopiedFiles(generator, templatePath);
+    });
+
+  },
+
+  replaceCopiedFiles: function (generator, templatePath) {
+    glob.sync(generator.templatePath(templatePath)).forEach(function (file) {
+      var lastUrlPart = file.substr(file.indexOf('templates') + 'templates'.length);
+      var fileToReplace = generator.destinationPath(base) + lastUrlPart;
+      // replaces fileName content inside %%
+      var fileReplaced = fileToReplace.replace(/%.*%/g, function (a) {
+        var toReplace = _.camelCase(a.substr(1, a.length - 2));
+        return strUtils.dasherize(generator.config.get(toReplace) || generator.props[toReplace]);
       });
-    }
+      fs.rename(fileToReplace, fileReplaced);
+    });
+  },
 
-    function copyAndReplaceFileNames(generator, templatePath, destinationPath) {
-      generator.template (
-        generator.templatePath(templatePath),
-        generator.destinationPath(destinationPath || base),
-        contextData
-      ).on('end', function () {
-        replaceCopiedFiles(generator, templatePath);
-      });
-    }
+  subModuleWritting: function(generator, extraContextData) {
+
+    var self = this;
+
+    contextData = contextData || this.createBasicContextData(generator);
+    base = base || this.calculateBase(generator);
 
     function copyTemplate(generator) {
       _.extend(contextData, extraContextData);
-      copyAndReplaceFileNames(generator, '**/*', null);
+      self.copyAndReplaceFileNames(generator, '**/*', null);
     };
 
     //exec
 
     // if the module subgenerator is being runned, it's not needed to check if the path exists, because the main module files will be created anyways
-    if(this.templatePath().indexOf('module') !== -1) copyTemplate(this);
+    if(generator.templatePath().indexOf('module') !== -1) copyTemplate(generator);
     else {
 
       try {// if the path doesn't exists, it needs basic module configuration
         var fsBasePath = fs.lstatSync(base);
       } catch (err) {
-        copyAndReplaceFileNames(this, '../../module/templates/*', null);
+        self.copyAndReplaceFileNames(generator, '../../module/templates/*', null);
       } finally {
-        copyTemplate(this);
+        copyTemplate(generator);
       }
 
     }

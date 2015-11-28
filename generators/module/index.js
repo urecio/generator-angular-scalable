@@ -12,15 +12,25 @@ module.exports = yeoman.generators.Base.extend({
     utils.welcome.call(this);
 
     var prompts = utils.createBasicSubPrompts.call(this);
+    prompts.push({
+      type: 'confirm',
+      name: 'includeStyle',
+      message: 'Do you want to include a style template?',
+      default: false
+    });
 
     this.prompt(prompts, function (props) {
       this.props = props;
       if(props.appName) utils.saveAppName.call(this, props.appName);
+      if(props.includeStyle) {
+        console.log('copy and replace stylesheets');
+        utils.copyAndReplaceFileNames(this, '../../stylesheet/templates/**/*', null);
+      }
       done();
     }.bind(this));
   },
 
   writing: function () {
-    utils.subModuleWritting.call(this);
+    utils.subModuleWritting(this);
   }
 });

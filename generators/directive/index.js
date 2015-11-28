@@ -23,6 +23,6 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: function () {
     var extraContextData = {directiveDasherizedName: strUtils.dasherize(this.props.componentName)};
-    utils.subModuleWritting.call(this, extraContextData);
+    utils.subModuleWritting(this, extraContextData);
   }
 });

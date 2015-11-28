@@ -21,6 +21,6 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: function () {
-    utils.subModuleWritting.call(this);
+    utils.subModuleWritting(this);
   }
 });
