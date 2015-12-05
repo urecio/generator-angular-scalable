@@ -14,11 +14,12 @@
 
     // Runs during compile
     return {
+      // controller: function($scope, $element, $attrs, $transclude) {},
+      // bindToController: true,
       // name: '',
       // priority: 1,
       // terminal: true,
       // scope: {}, // {} = isolate, true = child, false/undefined = no change
-      // controller: function($scope, $element, $attrs, $transclude) {},
       // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
       restrict: 'AE', // E = Element, A = Attribute, C = Class, M = Comment
       //template: '',
