@@ -92,6 +92,10 @@ module.exports = function(grunt) {
             connect().use(
             '/vendor',
             connect.static('./app/assets/vendor')
+            ),
+            connect().use(
+              '/images',
+              connect.static('./app/assets/images')
             )
             ];
           }
