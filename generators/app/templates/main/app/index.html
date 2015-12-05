@@ -43,10 +43,10 @@
 
     <!-- build:js({.tmp,app,.}) scripts/scripts.js -->
 
-    <!-- include: "type": "js", "files": "common/**/*.js" -->
+    <!-- include: "type": "js", "basePath": "app", "files": ["common/**/*.js", "!common/**/*.scenario.js", "!common/**/*.spec.js"], "ordering": "top-down" -->
     <!-- /include -->
 
-    <!-- include: "type": "js", "files": "components/**/*.js" -->
+    <!-- include: "type": "js", "basePath": "app", "files": ["components/**/*.js", "!components/**/*.scenario.js", "!components/**/*.spec.js"], "ordering": "top-down" -->
     <!-- /include -->
 
     <!-- endbuild -->

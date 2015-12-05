@@ -25,8 +25,8 @@ module.exports = function(grunt) {
     return (fs.existsSync(path)) ? grunt.file.readJSON(path) : {};
   };
 
-  var mainFiles = ['<%%= yeoman.app %>components/*/{,*/}*.js', '<%%= yeoman.app %>common/*/{,*/}*.js', '<%%= yeoman.app %>app.js'];
-  var testFiles = ['<%%= yeoman.app %>components/*/{,*/*}*.spec.js', '<%%= yeoman.app %>common/*/{,*/*}*.spec.js'];
+  var mainFiles = ['<%%= yeoman.app %>/components/*/{,*/}*.js', '<%%= yeoman.app %>/common/*/{,*/}*.js', '<%%= yeoman.app %>/app.js'];
+  var testFiles = ['<%%= yeoman.app %>/components/*/{,*/*}*.spec.js', '<%%= yeoman.app %>/common/*/{,*/*}*.spec.js'];
   var htmlFiles = ['components/*/views/{,*/}*.html', 'common/*/views/{,*/}*.html'];
 
   // Define the configuration for all the tasks
@@ -44,30 +44,30 @@ module.exports = function(grunt) {
       },
       js: {
         files: mainFiles,
-        tasks: ['newer:jshint:all'],
+        tasks: ['newer:jshint:all', 'newer:includeSource'],
         options: {
           livereload: '<%%= connect.options.livereload %>'
         }
       },
       compass: {
-        files: ['<%%= yeoman.app %>**/*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
+        files: ['<%%= yeoman.app %>/**/*.{scss,sass}'],
+        tasks: ['compass:server', 'autoprefixer', 'newer:includeSource']
+      },
+      indexHtml: {
+        files: ['<%%= yeoman.app %>/index.html'],
+        tasks: ['newer:includeSource']
       },
       livereload: {
         options: {
           livereload: '<%%= connect.options.livereload %>'
         },
         files: [
-        '<%%= yeoman.app %>components/*/views/{,*/}*.html',
-        '<%%= yeoman.app %>common/*/views/{,*/}*.html',
-        '<%%= yeoman.app %>index.html',
+        '<%%= yeoman.app %>/components/*/views/{,*/}*.html',
+        '<%%= yeoman.app %>/common/*/views/{,*/}*.html',
+        '<%%= yeoman.app %>/index.html',
         '.tmp/assets/styles/{,*/}*.css',
-        '<%%= yeoman.app %>assets/images/{,*/*}*.{png,jpg,jpeg,gif,webp,svg}'
+        '<%%= yeoman.app %>/assets/images/{,*/*}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
-      },
-      includeScripts: {
-        files: ['**/*.js', '.tmp/**/*.css', '**/*.scss', 'index.html'],
-        tasks: ['includeSource']
       }
     },
     // The actual grunt server settings
@@ -185,7 +185,7 @@ module.exports = function(grunt) {
     // Automatically inject Bower components into the app
     wiredep: {
       app: {
-        src: ['<%%= yeoman.app %>index.html'],
+        src: ['<%%= yeoman.app %>/index.html'],
         ignorePath: /\.\.\//,
         overrides: {
           'angulartics': {
@@ -194,7 +194,7 @@ module.exports = function(grunt) {
         }
       },
       sass: {
-        src: ['<%%= yeoman.app %>{,*/}*.{scss,sass}'],
+        src: ['<%%= yeoman.app %>/{,*/}*.{scss,sass}'],
         ignorePath: /\.\.\.\//
       },
       testKarma: {
@@ -218,12 +218,12 @@ module.exports = function(grunt) {
     // Compiles Sass to CSS and generates necessary files if requested
     compass: {
       options: {
-        sassDir: '<%%= yeoman.app %>',
+        sassDir: '<%%= yeoman.app %>/',
         cssDir: '.tmp',
         generatedImagesDir: '.tmp/images/generated',
-        imagesDir: '<%%= yeoman.app %>assets/images',
-        javascriptsDir: '<%%= yeoman.app %>(components|common)/{,*/}*',
-        fontsDir: '<%%= yeoman.app %>assets/fonts',
+        imagesDir: '<%%= yeoman.app %>/assets/images',
+        javascriptsDir: '<%%= yeoman.app %>/(components|common)/{,*/}*',
+        fontsDir: '<%%= yeoman.app %>/assets/fonts',
         importPath: [
         'bower_components/'
         ],
@@ -261,7 +261,7 @@ module.exports = function(grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%%= yeoman.dist %>index.html',
+      html: '<%%= yeoman.dist %>/index.html',
       options: {
         dest: '<%%= yeoman.dist %>',
         flow: {
@@ -318,7 +318,7 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%%= yeoman.app %>assets/images',
+          cwd: '<%%= yeoman.app %>/assets/images',
           src: ['**/*.{png,jpg,jpeg,gif}'],
           dest: '<%%= yeoman.dist %>/assets/images'
         }]
@@ -329,7 +329,7 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%%= yeoman.app %>assets/images',
+          cwd: '<%%= yeoman.app %>/assets/images',
           src: '{,*/}*.svg',
           dest: '<%%= yeoman.dist %>/assets/images'
         }]
@@ -400,7 +400,7 @@ module.exports = function(grunt) {
       },
       styles: {
         expand: true,
-        cwd: '<%%= yeoman.app %>assets/styles',
+        cwd: '<%%= yeoman.app %>/assets/styles',
         dest: '.tmp/',
         src: '{,*/}*.css'
       }
@@ -437,7 +437,7 @@ module.exports = function(grunt) {
     		 */
     ngtemplates: {
       app: {
-        cwd: '<%%= yeoman.app %>',
+        cwd: '<%%= yeoman.app %>/',
         src: htmlFiles,
         dest: 'app/templates.js',
         options: {
@@ -467,23 +467,29 @@ module.exports = function(grunt) {
     /*
     		 ***************************** END NGDOCS TASKS *****************************
     		 */
-    /**
-     * INCLUDE AUTOMATICALLY SCRIPTS FROM COMMON AND COMPONENTS INTO INDEX
-     */
-     includeSource: {
-       mainTarget: {
-         files: {
-           'index.html': 'index.html'
-         }
-       }
-     },
-    /**
-     * END INCLUDE
-     */
+         /**
+              * INCLUDE AUTOMATICALLY SCRIPTS FROM COMMON AND COMPONENTS INTO INDEX
+              */
+              includeSource: {
+                mainTarget: {
+                  options: {
+                    ordering: 'top-down'
+                  },
+                  files: {
+                    'app/index.html': 'app/index.html',
+                    'app/assets/styles/main.scss': 'app/assets/styles/main.scss',
+                    'app/assets/styles/commons/_atoms.scss': 'app/assets/styles/commons/_atoms.scss',
+                    'app/components/journals/styles/main/_journals.scss': 'app/components/journals/styles/main/_journals.scss'
+                  }
+                }
+              },
+             /**
+              * END INCLUDE
+              */
     ngconstant: {
       options: {
         name: '<%= appName %>.env',
-        dest: '<%%= yeoman.app %>common/env/env.js',
+        dest: '<%%= yeoman.app %>/common/env/env.js',
         wrap: '\'use strict\';\n\n/**\n* Env module.\n* @ngdoc overview\n* @name Env\n* @description\n*\n* # Main module of the feature.\n*/\n\n(function() {\n  {%= __ngModule %}\n\n})();'
       },
       dev: {
@@ -522,8 +528,9 @@ module.exports = function(grunt) {
     'wiredep',
     'concurrent:server',
     'autoprefixer',
+    'includeSource',
     'connect:livereload',
-    'watch:livereload'
+    'watch'
     ]);
   });
 

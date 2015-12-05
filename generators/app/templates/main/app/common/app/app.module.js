@@ -25,6 +25,4 @@ angular
 
     $locationProvider.html5Mode(false);
     $locationProvider.hashPrefix('!');
-
-    moment().locale('en');
   });

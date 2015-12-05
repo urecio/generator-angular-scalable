@@ -1,13 +1,13 @@
 // COMMONS
 
-// include: "type": "scss", "files": "common/**/*.scss"
+// include: "type": "scss", "basePath": "app", "files": "common/**/*.scss"
 // /include
 
 // END COMMONS
 
 // COMPONENTS
 
-// include: "type": "scss", "files": "/components/**/*.scss"
+// include: "type": "scss", "basePath": "app", "files": "components/**/main/*.scss"
 // /include
 
 // END COMPONENTS
