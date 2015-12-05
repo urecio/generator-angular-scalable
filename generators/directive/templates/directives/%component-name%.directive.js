@@ -15,6 +15,7 @@
     // Runs during compile
     return {
       // controller: function($scope, $element, $attrs, $transclude) {},
+      // controllerAs: '<%= componentName %>Controller',
       // bindToController: true,
       // name: '',
       // priority: 1,
