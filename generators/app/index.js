@@ -1,9 +1,6 @@
-// TODO: BUG!! check isolated module creation
-// TODO: review gitignore aswell when adding the new features
-// TODO: run wiredep after the generator and clean the index.html and karma with the necessary stuff
+// TODO: run wiredep after the generator
 // TODO: add the possibility to include the main module on the app.module.js
-// TODO: check if tests are passing after the main generation and after the submodules generation
-// TODO: create tests for the generator
+// TODO: tests
 // TODO: styles option per feature. Create block comments for the module, but on the header, for the styles
 // TODO: check the home view + social links
 // TODO: in the json server option, put back karma read json, etc
@@ -20,7 +17,8 @@ module.exports = yeoman.generators.Base.extend({
     utils.welcome.call(this);
 
     var prompts = [];
-    if(!this.config.get('appName')) {
+    this.appName = this.config.get('appName');
+    if(!this.appName) {
       prompts.push(utils.promptAppName);
     }
 
@@ -35,7 +33,7 @@ module.exports = yeoman.generators.Base.extend({
     this.fs.copyTpl(
       this.templatePath('./main/**/*'),
       this.destinationPath('./'),
-      {appName: this.props.appName}
+      {appName: this.appName || this.props.appName}
     );
   },
 
