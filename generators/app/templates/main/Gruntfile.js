@@ -179,9 +179,9 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '.tmp/styles/',
+          cwd: '.tmp/assets/styles/',
           src: '{,*/}*.css',
-          dest: '.tmp/styles/'
+          dest: '.tmp/assets/styles/'
         }]
       }
     },
