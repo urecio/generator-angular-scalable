@@ -3,9 +3,9 @@
 /**
  * Karma unit tests.
  */
-describe('<%= componentName %>Ctrl', function(){
+describe('<%= componentName %>Controller', function(){
 
-  var ctrl;
+  var Controller;
 
   beforeEach(module('<%= appName %>.<%= moduleName %>'));
 
@@ -14,7 +14,7 @@ describe('<%= componentName %>Ctrl', function(){
     var $rootScope = $injector.get('$rootScope');
     var $controller = $injector.get('$controller');
 
-    ctrl = $controller('<%= componentName %>Ctrl', {
+    Controller = $controller('<%= componentName %>Controller', {
       $scope: $rootScope.$new()
     });
   }));

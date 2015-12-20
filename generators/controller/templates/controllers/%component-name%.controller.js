@@ -4,12 +4,12 @@
  * <%= componentName %> controller.
  *
  * @ngdoc overview
- * @name  <%= componentName %>Ctrl
+ * @name  <%= componentName %>Controller
  * @description
  */
 (function(){
 
-  function <%= componentName %>Ctrl() {
+  function <%= componentName %>Controller() {
 
     var self = this;
 
@@ -18,5 +18,5 @@
   }
 
   angular.module('<%= appName %>.<%= moduleName %>')
-    .controller('<%= componentName %>Ctrl',<%= componentName %>Ctrl);
+    .controller('<%= componentName %>Controller',<%= componentName %>Controller);
 })();
