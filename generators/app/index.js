@@ -1,7 +1,6 @@
 // TODO: run wiredep after the generator
 // TODO: add the possibility to include the main module on the app.module.js
 // TODO: tests
-// TODO: styles option per feature. Create block comments for the module, but on the header, for the styles
 // TODO: check the home view + social links
 // TODO: in the json server option, put back karma read json, etc
 
@@ -14,7 +13,7 @@ module.exports = yeoman.generators.Base.extend({
     var done = this.async();
 
     // Have Yeoman greet the user.
-    utils.welcome.call(this);
+    utils.setGenerator(this); utils.welcome.call(this);
 
     var prompts = [];
     this.appName = this.config.get('appName');

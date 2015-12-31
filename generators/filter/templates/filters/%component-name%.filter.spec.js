@@ -10,6 +10,7 @@ describe('<%= componentName %>Filter', function(){
   beforeEach(module('<%= appName %>.<%= moduleName %>'));
 
   beforeEach(inject(function($injector) {
+    var $filter = $injector.get('$filter');
     <%= componentName %>filter = $filter('<%= componentName %>');
   }));
 

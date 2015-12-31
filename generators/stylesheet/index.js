@@ -9,7 +9,7 @@ module.exports = yeoman.generators.Base.extend({
     var done = this.async();
 
     // Have Yeoman greet the user.
-    utils.welcome.call(this);
+    utils.setGenerator(this); utils.welcome.call(this);
 
     var prompts = utils.createBasicSubPrompts.call(this);
 
@@ -21,6 +21,8 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: function () {
-    utils.subModuleWritting(this);
+    var foldersToCreate = ['styles/imports'];
+    utils.subModuleWritting( null, foldersToCreate);
+    utils.updateIncludeSourceGrunt(utils.lastWrittenFolder);
   }
 });

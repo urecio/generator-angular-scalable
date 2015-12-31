@@ -12,11 +12,21 @@
 
 (function(){
 
-  function <%= moduleName %>() {
+  function <%= moduleName %>(<%if (includeController === true || includeView === true) { %> $stateProvider <% } %>) {
 
-    // $stateProvider.state('<%= moduleName %>', {
-    //   url: '/<%= moduleName %>',
-    // });
+    <%if (!includeController && !includeView) { %>
+      /*
+    <% } %>
+
+    $stateProvider.state('<%= moduleName.toLowerCase() %>', {
+      url: '/<%= moduleName %>',
+    <%if (includeController === true) { %>  controller: '<%= moduleName %>Controller as <%= moduleName %>Controller', <% } %>
+    <%if (includeView === true) { %>  templateUrl: '<%= viewUrl %>',  <% } %>
+    });
+
+    <%if (!includeController && !includeView) { %>
+    */
+    <% } %>
 
   }
 

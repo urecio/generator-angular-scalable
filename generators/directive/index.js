@@ -10,7 +10,7 @@ module.exports = yeoman.generators.Base.extend({
     var done = this.async();
 
     // Have Yeoman greet the user.
-    utils.welcome.call(this);
+    utils.setGenerator(this); utils.welcome.call(this);
 
     var prompts = utils.createBasicSubPrompts.call(this);
 
@@ -23,6 +23,6 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: function () {
     var extraContextData = {directiveDasherizedName: strUtils.dasherize(this.props.componentName)};
-    utils.subModuleWritting(this, extraContextData);
+    utils.subModuleWritting( extraContextData);
   }
 });

@@ -28,6 +28,10 @@ module.exports = function(grunt) {
   var mainFiles = ['<%%= yeoman.app %>/components/*/{,*/}*.js', '<%%= yeoman.app %>/common/*/{,*/}*.js', '<%%= yeoman.app %>/app.js'];
   var testFiles = ['<%%= yeoman.app %>/components/*/{,*/*}*.spec.js', '<%%= yeoman.app %>/common/*/{,*/*}*.spec.js'];
   var htmlFiles = ['components/*/views/{,*/}*.html', 'common/*/views/{,*/}*.html'];
+  var includeSourceFiles = {
+    'app/index.html': 'app/index.html',
+    'app/assets/styles/main.scss': 'app/assets/styles/main.scss'
+  };
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -479,12 +483,7 @@ module.exports = function(grunt) {
                   options: {
                     ordering: 'top-down'
                   },
-                  files: {
-                    'app/index.html': 'app/index.html',
-                    'app/assets/styles/main.scss': 'app/assets/styles/main.scss',
-                    'app/assets/styles/commons/_atoms.scss': 'app/assets/styles/commons/_atoms.scss',
-                    'app/components/journals/styles/main/_journals.scss': 'app/components/journals/styles/main/_journals.scss'
-                  }
+                  files: includeSourceFiles
                 }
               },
              /**
