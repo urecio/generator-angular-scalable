@@ -7,8 +7,8 @@
 
  describe('<%= componentName %> Directive', function(){
 
-  var element,
-      $scope;
+  var $scope,
+      element;
 
   beforeEach(function(){
     module('<%= appName %>.<%= moduleName %>');
