@@ -26,6 +26,7 @@ yo angular-scalable:view
 yo angular-scalable:filter
 yo angular-scalable:factory
 yo angular-scalable:service
+yo angular-scalable:stylesheet
 ```
 
 ## Getting To Know Yeoman
