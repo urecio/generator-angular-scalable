@@ -26,7 +26,41 @@ yo angular-scalable:view
 yo angular-scalable:filter
 yo angular-scalable:factory
 yo angular-scalable:service
+yo angular-scalable:stylesheet
 ```
+
+## Directory organisation
+
+```
+- app
+   / assets
+   / common
+       / app
+   / components
+       / component1
+           / component1.module.js
+           / component1.module.spec.js
+           / styles
+                / module.styles
+                    / component1.scss (stylesheet)
+                    / imports (components stylesheets)
+                        / component1.scss (stylesheet)
+                   / controllers
+                      / component.controller.js
+                      / component.controller.spec.js
+                   / directives
+                      / component.directive.js
+                      / component.directive.spec.js
+                   / services
+                      / component.service.js
+                      / component.service.spec.js
+                   / views
+                      / component.view.html
+   / Test
+      / karma.conf.js
+      / coverage
+```
+
 
 ## Getting To Know Yeoman
 
