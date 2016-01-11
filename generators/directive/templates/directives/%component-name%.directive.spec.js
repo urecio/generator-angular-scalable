@@ -15,7 +15,7 @@
 
     inject(function($injector){
       // inject things here
-    })
+    });
   });
 
   beforeEach(function(){
