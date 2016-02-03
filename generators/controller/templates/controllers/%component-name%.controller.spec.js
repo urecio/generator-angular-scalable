@@ -5,18 +5,16 @@
  */
 describe('<%= componentName %>Controller', function(){
 
-  var Controller;
+  var <%= componentName %>Controller;
 
   beforeEach(module('<%= appName %>.<%= moduleName %>'));
 
-  beforeEach(inject(function($injector) {
+  beforeEach(inject(function(_$rootScope_, _$controller_) {
 
-    var $rootScope = $injector.get('$rootScope');
-    var $controller = $injector.get('$controller');
-
-    Controller = $controller('<%= componentName %>Controller', {
-      $scope: $rootScope.$new()
+    <%= componentName %>Controller = _$controller_('<%= componentName %>Controller', {
+      $scope: _$rootScope_.$new()
     });
+
   }));
 
 });
