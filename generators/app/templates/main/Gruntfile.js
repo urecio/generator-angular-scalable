@@ -20,11 +20,6 @@ module.exports = function(grunt) {
     dist: 'dist'
   };
 
-  var getCreds = function() {
-    var path = 'credentials.json';
-    return (fs.existsSync(path)) ? grunt.file.readJSON(path) : {};
-  };
-
   var mainFiles = ['<%%= yeoman.app %>/components/*/{,*/}*.js', '<%%= yeoman.app %>/common/*/{,*/}*.js', '<%%= yeoman.app %>/app.js'];
   var testFiles = ['<%%= yeoman.app %>/components/*/{,*/*}*.spec.js', '<%%= yeoman.app %>/common/*/{,*/*}*.spec.js'];
   var htmlFiles = ['components/*/views/{,*/}*.html', 'common/*/views/{,*/}*.html'];
@@ -38,7 +33,6 @@ module.exports = function(grunt) {
 
     // Project settings
     yeoman: appConfig,
-    creds: getCreds(),
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
