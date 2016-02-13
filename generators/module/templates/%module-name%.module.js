@@ -12,19 +12,22 @@
 
 (function(){
 
-  function <%= moduleName %>(<%if (includeController === true || includeView === true) { %> $stateProvider <% } %>) {
+  <% var includeControllerTemplate = typeof includeController !== 'undefined' && includeController === true ? true : false %>
+  <% var includeViewTemplate = typeof includeView !== 'undefined' && includeView === true ? true : false %>
 
-    <%if (!includeController && !includeView) { %>
+  function <%= moduleName %>(<%if (includeControllerTemplate === true || includeViewTemplate === true) { %> $stateProvider <% } %>) {
+
+    <%if (!includeControllerTemplate && !includeViewTemplate) { %>
       /*
     <% } %>
 
     $stateProvider.state('<%= moduleName.toLowerCase() %>', {
       url: '/<%= moduleName %>',
-    <%if (includeController === true) { %>  controller: '<%= moduleName %>Controller as <%= moduleName %>Controller', <% } %>
-    <%if (includeView === true) { %>  templateUrl: '<%= viewUrl %>',  <% } %>
+    <%if (includeControllerTemplate === true) { %>  controller: '<%= moduleName %>Controller as <%= moduleName %>Controller', <% } %>
+    <%if (includeViewTemplate === true) { %>  templateUrl: '<%= viewUrl %>',  <% } %>
     });
 
-    <%if (!includeController && !includeView) { %>
+    <%if (!includeControllerTemplate && !includeViewTemplate) { %>
     */
     <% } %>
 
