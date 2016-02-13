@@ -47,9 +47,9 @@ module.exports = function(grunt) {
           livereload: '<%%= connect.options.livereload %>'
         }
       },
-      compass: {
-        files: ['<%%= yeoman.app %>/**/*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer', 'newer:includeSource']
+      sass: {
+        files: ['<%%= yeoman.app %>/**/*.{scss,sass}', '!<%%= yeoman.app %>/assets/styleguide-sources-only/{,*/}*'],
+        tasks: ['sass:dist', 'autoprefixer', 'newer:includeSource']
       },
       indexHtml: {
         files: ['<%%= yeoman.app %>/index.html'],
@@ -66,6 +66,11 @@ module.exports = function(grunt) {
         '.tmp/assets/styles/{,*/}*.css',
         '<%%= yeoman.app %>/assets/images/{,*/*}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      }
+    },
+    focus: {
+      dev: {
+        include: ['sass', 'livereload']
       }
     },
     // The actual grunt server settings
@@ -218,33 +223,26 @@ module.exports = function(grunt) {
     },
     /* STYLES SECTION */
     // Compiles Sass to CSS and generates necessary files if requested
-    compass: {
+    sass: {
       options: {
-        sassDir: '<%%= yeoman.app %>/',
-        cssDir: '.tmp',
-        generatedImagesDir: '.tmp/images/generated',
-        imagesDir: '<%%= yeoman.app %>/assets/images',
-        javascriptsDir: '<%%= yeoman.app %>/(components|common)/{,*/}*',
-        fontsDir: '<%%= yeoman.app %>/assets/fonts',
-        importPath: [
-        'bower_components/'
+        sourceMap: true,
+        sourceComments: false,
+        includePaths: [
+          'bower_components',
+          '<%%= yeoman.app %>/'
         ],
-        httpImagesPath: '/assets/images',
-        httpGeneratedImagesPath: '/assets/images/generated',
-        httpFontsPath: '/assets/fonts',
-        relativeAssets: false,
-        assetCacheBuster: false,
-        raw: 'Sass::Script::Number.precision = 10\nEncoding.default_external = "UTF-8"\n'
+        imagePath: '<%%= yeoman.app %>/assets/images',
+        precision: 10
       },
       dist: {
-        options: {
-          generatedImagesDir: '<%%= yeoman.dist %>/images/generated'
-        }
-      },
-      server: {
-        options: {
-          debugInfo: true
-        }
+        files: [{
+          expand: true,
+          cwd: '<%%= yeoman.app %>',
+          src: ['**/*.scss'],
+          dest: '.tmp',
+          ext: '.css',
+          extDot: 'last'
+        }]
       }
     },
     /* ENDS STYLES SECTION */
@@ -411,15 +409,15 @@ module.exports = function(grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-      'compass:server'
+        'sass:dist'
       ],
       test: [
-      'compass'
+        'sass'
       ],
       dist: [
-      'compass:dist',
-      'imagemin',
-      'svgmin'
+        'sass:dist',
+        'imagemin',
+        'svgmin'
       ]
     },
 
@@ -443,7 +441,7 @@ module.exports = function(grunt) {
         src: htmlFiles,
         dest: 'app/templates.js',
         options: {
-          module: '<%= appName %>',
+          module: '<%%= appName %>',
           usemin: 'scripts/scripts.js'
         }
       }
@@ -457,13 +455,13 @@ module.exports = function(grunt) {
         scripts: ['bower_components/angular/angular.js'],
         html5Mode: false,
         startPage: '/',
-        title: '<%= appName %>',
+        title: '<%%= appName %>',
         titleLink: '/',
         bestMatch: true,
       },
       common: {
         src: ['app/common/**/{*,/}*.js'],
-        title: '<%= appName %> common'
+        title: '<%%= appName %> common'
       }
     },
     /*
@@ -485,25 +483,25 @@ module.exports = function(grunt) {
               */
     ngconstant: {
       options: {
-        name: '<%= appName %>.env',
+        name: '<%%= appName %>.env',
         dest: '<%%= yeoman.app %>/common/env/env.js',
         wrap: '\'use strict\';\n\n/**\n* Env module.\n* @ngdoc overview\n* @name Env\n* @description\n*\n* # Main module of the feature.\n*/\n\n(function() {\n  {%= __ngModule %}\n\n})();'
       },
       dev: {
         constants: {
-          API: 'https://alpha.<%= appName %>.com/api/',
+          API: 'https://alpha.<%%= appName %>.com/api/',
           environment: 'dev'
         }
       },
       beta: {
         constants: {
-          API: 'https://beta.<%= appName %>.com/api/',
+          API: 'https://beta.<%%= appName %>.com/api/',
           environment: 'beta'
         }
       },
       production: {
         constants: {
-          API: 'https://<%= appName %>.com/api/',
+          API: 'https://<%%= appName %>.com/api/',
           environment: 'production'
         }
       }
@@ -521,13 +519,13 @@ module.exports = function(grunt) {
     }
 
     grunt.task.run([
-    'clean:server',
-    'wiredep',
-    'concurrent:server',
-    'autoprefixer',
-    'includeSource',
-    'connect:livereload',
-    'watch'
+      'clean:server',
+      'wiredep',
+      'concurrent:server',
+      'autoprefixer',
+      'includeSource',
+      'connect:livereload',
+      'focus:dev'
     ]);
   });
 
@@ -535,26 +533,21 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', function() {
     var tasks = [];
-      switch (env) {
-        case 'beta':
-        case 'production': {
-          tasks.push('ngconstant:' + env);
-          break;
-        }
-        case 'local': {
-          tasks.push('ngconstant:' + env);
-          break;
-        }
-        default: {
-          tasks.push('ngconstant:dev');
-        }
-
+    switch (env) {
+      case 'beta': {
+        tasks.push('ngconstant:' + env);
+        break;
       }
-      tasks.push(
+      default: {
+        tasks.push('ngconstant:dev');
+      }
+    }
+
+    tasks.push(
       'clean:dist',
       'wiredep',
       'useminPrepare',
-      'compass:dist',
+      'sass:dist',
       'imagemin',
       'svgmin',
       'autoprefixer',
@@ -567,9 +560,18 @@ module.exports = function(grunt) {
       'filerev',
       'usemin',
       'htmlmin'
-      );
+    );
 
-      grunt.task.run(tasks);
+    if (env === 'production') {
+      tasks.push(
+        'replace'
+      );
+    } else if (env === 'beta') {
+      tasks.push('replace:analytics');
+    }
+
+    grunt.task.run(tasks);
+
   });
 
   grunt.registerTask('initTest', [
