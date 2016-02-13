@@ -50,7 +50,7 @@ module.exports = yeoman.generators.Base.extend({
       if(props.appName) utils.saveAppName.call(this, props.appName);
       if( props.includeStyle ) utils.generateStyles();
       if( props.includeController || props.includeView ) {
-        this.config.set('componentName', this.props.moduleName);
+        this.props.componentName = this.props.moduleName;
         if(props.includeController) utils.copyAndReplaceFileNames('../../controller/templates/**/*');
         if(props.includeView) utils.copyAndReplaceFileNames('../../view/templates/**/*');
       }
