@@ -32,7 +32,12 @@ module.exports = yeoman.generators.Base.extend({
     this.fs.copyTpl(
       this.templatePath('./main/**/*'),
       this.destinationPath('./'),
-      {appName: this.appName || this.props.appName}
+      { appName: this.appName || this.props.appName }
+    );
+    // copies .files like .gitignore
+    this.fs.copy(
+      this.templatePath('./main/**/.*'),
+      this.destinationPath('./')
     );
   },
 
