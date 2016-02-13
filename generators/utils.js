@@ -43,12 +43,14 @@ module.exports = {
   generateStyles: function () {
     var foldersToCreate = ['styles/auto-imports'];
     this.copyAndReplaceFileNames('../../stylesheet/templates/**/*', null, foldersToCreate);
-    this.updateIncludeSourceGrunt(this.lastWrittenFolder);
+    this.updateIncludeSourceGrunt();
   },
 
-  updateIncludeSourceGrunt: function (lastWrittenFolder) {
+  updateIncludeSourceGrunt: function () {
     // gets the last style file name edited
-    var styleFileName = this.lastFileNamesEdited.filter(function (a) {return a.indexOf('scss') !== -1});
+    var styleFileName = this.lastFileNamesEdited.filter(function (a) {return a.indexOf('scss') !== -1})[0];
+    styleFileName = styleFileName.substring(styleFileName.indexOf('app'));
+
     // get the variable
     var gruntTree = this.generator.gruntfile.gruntfile;
 
@@ -58,7 +60,7 @@ module.exports = {
     // write the variable in the tree with the new style path
     var includeSourceFiles = gruntTree.var("includeSourceFiles").value();
     // style path to variable
-    includeSourceFiles.key("'"+lastWrittenFolder+styleFileName+"'").value('"'+lastWrittenFolder+styleFileName+'"');
+    includeSourceFiles.key("'"+styleFileName+"'").value('"'+styleFileName+'"');
     // insert the variable content
     this.generator.gruntfile.insertVariable("includeSourceFiles", escodegen.generate(includeSourceFiles.node));
 
