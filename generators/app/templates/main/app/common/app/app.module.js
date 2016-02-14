@@ -10,6 +10,7 @@
  */
 angular
 .module('<%= appName %>', [
+  'ui.router',
   'ngSanitize',
 
   /* COMMONS */
