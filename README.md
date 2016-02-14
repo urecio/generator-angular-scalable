@@ -63,7 +63,7 @@ yo angular-scalable:stylesheet
 
 ## Some features
 
-# Working with different APIS
+### Working with different APIS
 
 There is a grunt task to setup a constant with the base url of those APIs, so that you can run:
 - `grunt ngconstant:dev` to work with your alpha API
