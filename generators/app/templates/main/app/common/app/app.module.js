@@ -14,7 +14,7 @@ angular
 
   /* COMMONS */
   '<%= appName %>.cache',
-  /* END COMMONS */
+  /* END COMMON */
 
   /* COMPONENTS */
   '<%= appName %>.home',

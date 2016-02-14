@@ -54,6 +54,7 @@ module.exports = yeoman.generators.Base.extend({
         if(props.includeController) utils.copyAndReplaceFileNames('../../controller/templates/**/*');
         if(props.includeView) utils.copyAndReplaceFileNames('../../view/templates/**/*');
       }
+      utils.includeModuleInApp();
       done();
     }.bind(this));
   },

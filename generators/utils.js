@@ -36,6 +36,14 @@ module.exports = {
     ));
   },
 
+  includeModuleInApp: function () {
+    var appRoute = this.generator.destinationRoot() + '/app/common/app/app.module.js';
+    var appFile = fs.readFileSync(appRoute, 'utf-8');
+    var commentBlockToReplace = this.generator.props.isCommon ? '/* END COMMON */' : '/* END COMPONENTS */';
+    var appAndModule = this.generator.config.get('appName') + '.' + this.generator.props.moduleName;
+    fs.writeFileSync(appRoute, appFile.replace(commentBlockToReplace, '\''+appAndModule + '\',\n' + commentBlockToReplace));
+  },
+
   setGenerator: function (generator) {
     this.generator = generator;
   },
