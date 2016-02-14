@@ -61,6 +61,15 @@ yo angular-scalable:stylesheet
       / coverage
 ```
 
+## Some features
+
+# Working with different APIS
+
+There is a grunt task to setup a constant with the base url of those APIs, so that you can run:
+- `grunt ngconstant:dev` to work with your alpha API
+- `grunt ngconstant:beta` to work with your beta API
+- Or `grunt serve:dev` to serve directly with that API
+
 
 ## Getting To Know Yeoman
 
