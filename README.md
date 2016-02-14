@@ -70,6 +70,9 @@ There is a grunt task to setup a constant with the base url of those APIs, so th
 - `grunt ngconstant:beta` to work with your beta API
 - Or `grunt serve:dev` to serve directly with that API
 
+### Other notes
+
+- When you create a module with styles, it will update the `includeSourceFiles` variable in the Gruntfile. This is to automatically include sub partials into the main stylesheet of the module using `grunt includeSources`. If you manually remove a module, you should also remove it from this variable, otherwise the task will attemp to create the file.
 
 ## Getting To Know Yeoman
 
