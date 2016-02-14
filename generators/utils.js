@@ -95,11 +95,12 @@ module.exports = {
     // context data
     contextData = this.createBasicContextData();
     _.extend(contextData, extraContextData);
+
+    // viewUrl
     if( !this.contextData.viewUrl ) {
       this.contextData.viewUrl = filesAndNewNameToReplace.filter(function(a){return a.to.indexOf('view.html') !== -1})[0];
-      if( this.contextData.viewUrl ) this.contextData.viewUrl = this.contextData.viewUrl.to;
+      if( this.contextData.viewUrl ) this.contextData.viewUrl = this.contextData.viewUrl.to.substring(this.contextData.viewUrl.to.indexOf('app') + 4);
     } else contextData.viewUrl = this.contextData.viewUrl;
-
 
     // template generation
     this.generator.template (
