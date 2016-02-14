@@ -191,6 +191,14 @@ module.exports = function(grunt) {
 
     // Automatically inject Bower components into the app
     wiredep: {
+      <%if (includeBootstrap === true) { %>
+      options: {
+        exclude: [
+          'bootstrap-sass-official',
+          '/bower_components/bootstrap/',
+        ]
+      },
+      <% } %>
       app: {
         src: ['<%%= yeoman.app %>/index.html'],
         ignorePath: /\.\.\//,
@@ -441,7 +449,7 @@ module.exports = function(grunt) {
         src: htmlFiles,
         dest: 'app/templates.js',
         options: {
-          module: '<%%= appName %>',
+          module: '<%= appName %>',
           usemin: 'scripts/scripts.js'
         }
       }
@@ -455,13 +463,13 @@ module.exports = function(grunt) {
         scripts: ['bower_components/angular/angular.js'],
         html5Mode: false,
         startPage: '/',
-        title: '<%%= appName %>',
+        title: '<%= appName %>',
         titleLink: '/',
         bestMatch: true,
       },
       common: {
         src: ['app/common/**/{*,/}*.js'],
-        title: '<%%= appName %> common'
+        title: '<%= appName %> common'
       }
     },
     /*
@@ -483,25 +491,25 @@ module.exports = function(grunt) {
               */
     ngconstant: {
       options: {
-        name: '<%%= appName %>.env',
+        name: '<%= appName %>.env',
         dest: '<%%= yeoman.app %>/common/env/env.js',
         wrap: '\'use strict\';\n\n/**\n* Env module.\n* @ngdoc overview\n* @name Env\n* @description\n*\n* # Main module of the feature.\n*/\n\n(function() {\n  {%= __ngModule %}\n\n})();'
       },
       dev: {
         constants: {
-          API: 'https://alpha.<%%= appName %>.com/api/',
+          API: 'https://alpha.<%= appName %>.com/api/',
           environment: 'dev'
         }
       },
       beta: {
         constants: {
-          API: 'https://beta.<%%= appName %>.com/api/',
+          API: 'https://beta.<%= appName %>.com/api/',
           environment: 'beta'
         }
       },
       production: {
         constants: {
-          API: 'https://<%%= appName %>.com/api/',
+          API: 'https://<%= appName %>.com/api/',
           environment: 'production'
         }
       }

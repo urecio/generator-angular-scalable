@@ -1,5 +1,9 @@
 // COMMONS
 
+<%if (includeBootstrap === true) { %>
+@import "bootstrap-sass/assets/stylesheets/bootstrap";
+<% } %>
+
 // include: "type": "scss", "basePath": "app", "files": "common/**/*.scss"
 // /include
 

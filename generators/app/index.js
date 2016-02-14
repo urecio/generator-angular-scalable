@@ -1,7 +1,5 @@
 // TODO: run wiredep after the generator
-// TODO: add the possibility to include the main module on the app.module.js
 // TODO: tests
-// TODO: check the home view + social links
 // TODO: in the json server option, put back karma read json, etc
 
 'use strict';
@@ -20,6 +18,12 @@ module.exports = yeoman.generators.Base.extend({
     if(!this.appName) {
       prompts.push(utils.promptAppName);
     }
+    prompts.push({
+      type: 'confirm',
+      name: 'includeBootstrap',
+      message: 'Do you want to include bootstrap?',
+      default: false
+    });
 
     this.prompt(prompts, function (props) {
       this.props = props;
@@ -30,13 +34,19 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: function () {
     this.fs.copyTpl(
-      this.templatePath('./main/**/*'),
+      this.templatePath('./main/**/!(*.png|*.jpg|*.jpeg|*.gif|*.webp|*.svg)'),
       this.destinationPath('./'),
-      { appName: this.appName || this.props.appName }
+      { appName: this.appName || this.props.appName,
+        includeBootstrap: this.props.includeBootstrap || false}
     );
     // copies .files like .gitignore
     this.fs.copy(
       this.templatePath('./main/**/.*'),
+      this.destinationPath('./')
+    );
+    // copies images
+    this.fs.copy(
+      this.templatePath('./main/**/+(*.png|*.jpg|*.jpeg|*.gif|*.webp|*.svg)'),
       this.destinationPath('./')
     );
   },
