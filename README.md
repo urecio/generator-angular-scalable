@@ -70,8 +70,10 @@ There is a grunt task to setup a constant with the base url of those APIs, so th
 - `grunt ngconstant:beta` to work with your beta API
 - Or `grunt serve:dev` to serve directly with that API
 
-* Bootstrap option
-* Protractor option
+### Extra options
+
+* Bootstrap
+* Protractor
 
 ### Other notes
 
