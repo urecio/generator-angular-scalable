@@ -440,6 +440,21 @@ module.exports = function(grunt) {
         singleRun: false,
       }
     },
+
+    <%if (includeProtractor === true) { %>
+    // e2e
+    protractor: {
+      options: {
+        keepAlive: true,
+        noColor: false,
+      },
+      all: {
+        options: {
+          configFile: "test/e2e/conf.js",
+        }
+      },
+    },
+    <% } %>
     /*
     		 ***************************** NGTEMPLATES TASKS *****************************
     		 */

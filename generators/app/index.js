@@ -24,20 +24,40 @@ module.exports = yeoman.generators.Base.extend({
       message: 'Do you want to include bootstrap?',
       default: false
     });
+    prompts.push({
+      type: 'confirm',
+      name: 'includeProtractor',
+      message: 'Do you want to include protractor?',
+      default: false
+    });
 
     this.prompt(prompts, function (props) {
       this.props = props;
-      if(props.appName) utils.saveAppName.call(this, this.props.appName);
+      if ( props.appName ) utils.saveAppName.call(this, this.props.appName);
+      if ( props.includeProtractor ) this.config.set('includeProtractor', 'true');
       done();
     }.bind(this));
   },
 
   writing: function () {
+
+    var filesToCopy = [
+      this.templatePath('./main/**/!(*.png|*.jpg|*.jpeg|*.gif|*.webp|*.svg)')
+    ];
+
+    if ( !this.props.includeProtractor ) {
+      filesToCopy.push('!'+this.templatePath('./main/test/e2e/**'));
+      filesToCopy.push('!'+this.templatePath('./**/*.scenario.js'));
+    }
+
     this.fs.copyTpl(
-      this.templatePath('./main/**/!(*.png|*.jpg|*.jpeg|*.gif|*.webp|*.svg)'),
+      filesToCopy,
       this.destinationPath('./'),
-      { appName: this.appName || this.props.appName,
-        includeBootstrap: this.props.includeBootstrap || false}
+      {
+        appName: this.appName || this.props.appName,
+        includeBootstrap: this.props.includeBootstrap || false,
+        includeProtractor: this.props.includeProtractor || false
+      }
     );
     // copies .files like .gitignore
     this.fs.copy(
@@ -49,6 +69,7 @@ module.exports = yeoman.generators.Base.extend({
       this.templatePath('./main/**/+(*.png|*.jpg|*.jpeg|*.gif|*.webp|*.svg)'),
       this.destinationPath('./')
     );
+    
   },
 
   install: function () {

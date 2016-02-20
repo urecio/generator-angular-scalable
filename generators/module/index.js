@@ -64,6 +64,7 @@ module.exports = yeoman.generators.Base.extend({
       includeView: this.props.includeView,
       includeController: this.props.includeController
     };
+    if ( this.config.get('includeProtractor') ) utils.copyAndReplaceFileNames('../../protractor/templates/**/*');
     utils.subModuleWritting(extraContextData);
   }
 });

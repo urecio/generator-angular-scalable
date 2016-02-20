@@ -99,7 +99,6 @@ module.exports = {
     this.base = this.base || this.calculateBase();
     filesAndNewNameToReplace = this.getFilesWithNewNamesAndUpdateContext(templatePath);
     destinationPath = this.generator.destinationPath(destinationPath || this.base);
-
     // context data
     contextData = this.createBasicContextData();
     _.extend(contextData, extraContextData);
@@ -139,7 +138,6 @@ module.exports = {
     var self = this;
     this.lastFileNamesEdited = [];
     var filesAndNewName = [];
-
     glob.sync(this.generator.templatePath(templatePath)).forEach(function (file) {
       var lastUrlPart = file.substr(file.indexOf('templates') + 'templates'.length);
       var fileToReplace = self.generator.destinationPath(self.base) + lastUrlPart;
@@ -152,12 +150,7 @@ module.exports = {
       // updates context
       self.lastFileNamesEdited.push(fileReplaced);
     });
-
     return filesAndNewName;
-  },
-
-  replaceCopiedFiles: function (templatePath) {
-    this.replaceFileNames(this.getFilesWithNewNamesAndUpdateContext(templatePath));
   },
 
   subModuleWritting: function(extraContextData, foldersToCreate) {
