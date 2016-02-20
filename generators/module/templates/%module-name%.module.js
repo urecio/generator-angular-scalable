@@ -22,9 +22,10 @@
     <% } %>
 
     $stateProvider.state('<%= moduleName.toLowerCase() %>', {
-      url: '/<%= moduleName %>',
-    <%if (includeControllerTemplate === true) { %>  controller: '<%= moduleName %>Controller as <%= moduleName %>Controller', <% } %>
-    <%if (includeViewTemplate === true) { %>  templateUrl: '<%= viewUrl %>',  <% } %>
+      url: '/<%= moduleName %>', <%if (includeControllerTemplate === true) { %>
+      controller: '<%= moduleName %>Controller as <%= moduleName %>Controller', <% } %>    <%if
+      (includeViewTemplate === true) { %>
+      templateUrl: '<%= viewUrl %>',  <% } %>
     });
 
     <%if (!includeControllerTemplate && !includeViewTemplate) { %>
