@@ -33,6 +33,14 @@
 
   }
 
-  angular.module('<%= appName %>.<%= moduleName %>', [])
+  angular.module('<%= appName %>.<%= moduleName %>', [
+    <%if (!includeControllerTemplate && !includeViewTemplate) { %>
+      /*
+    <% } %>
+    'ui.router'
+    <%if (!includeControllerTemplate && !includeViewTemplate) { %>
+    */
+    <% } %>
+  ])
     .config(<%= moduleName %>);
 })();
