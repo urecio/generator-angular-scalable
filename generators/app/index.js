@@ -30,11 +30,18 @@ module.exports = yeoman.generators.Base.extend({
       message: 'Do you want to include protractor?',
       default: false
     });
+    prompts.push({
+      type: 'confirm',
+      name: 'includeJsonServer',
+      message: 'Do you want to include a mocks json server?',
+      default: false
+    });
 
     this.prompt(prompts, function (props) {
       this.props = props;
       if ( props.appName ) utils.saveAppName.call(this, this.props.appName);
       if ( props.includeProtractor ) this.config.set('includeProtractor', 'true');
+      if ( props.includeJsonServer ) this.config.set('includeJsonServer', 'true');
       done();
     }.bind(this));
   },
@@ -50,13 +57,18 @@ module.exports = yeoman.generators.Base.extend({
       filesToCopy.push('!'+this.templatePath('./**/*.scenario.js'));
     }
 
+    if ( !this.props.includeJsonServer ) {
+      filesToCopy.push('!'+this.templatePath('./main/test/mocks/**'));
+    }
+
     this.fs.copyTpl(
       filesToCopy,
       this.destinationPath('./'),
       {
         appName: this.appName || this.props.appName,
         includeBootstrap: this.props.includeBootstrap || false,
-        includeProtractor: this.props.includeProtractor || false
+        includeProtractor: this.props.includeProtractor || false,
+        includeJsonServer: this.props.includeJsonServer || false
       }
     );
     // copies .files like .gitignore
@@ -69,7 +81,7 @@ module.exports = yeoman.generators.Base.extend({
       this.templatePath('./main/**/+(*.png|*.jpg|*.jpeg|*.gif|*.webp|*.svg)'),
       this.destinationPath('./')
     );
-    
+
   },
 
   install: function () {

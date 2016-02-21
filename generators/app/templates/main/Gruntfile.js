@@ -527,8 +527,26 @@ module.exports = function(grunt) {
           API: 'https://<%= appName %>.com/api/',
           environment: 'production'
         }
+      }<%if (includeJsonServer === true) { %>,
+      localJson: {
+        constants: {
+          API: 'http://localhost:13337/',
+          environment: 'local'
+        }
+      }
+      <% } %>
+    }<%if (includeJsonServer === true) { %>,
+    json_server: { //mini server for the mocks
+      dev: {
+        options: {
+          port: 13337,
+          hostname: '0.0.0.0',
+          db: 'test/mocks/data.json',
+          routes: 'test/mocks/routes.json'
+        }
       }
     }
+    <% } %>
   });
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
@@ -539,6 +557,11 @@ module.exports = function(grunt) {
       case 'alpha':
         grunt.task.run('ngconstant:dev');
         break;
+      <%if (includeJsonServer === true) { %>
+      case 'localJson':
+        grunt.task.run('ngconstant:localJson');
+        break;
+      <% } %>
     }
 
     grunt.task.run([

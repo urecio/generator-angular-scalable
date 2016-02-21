@@ -32,7 +32,8 @@
     "grunt-ngdocs": "^0.2.5",
     "grunt-svgmin": "^2.0.1",
     "grunt-usemin": "^3.0.0",
-    "grunt-wiredep": "^2.0.0",
+    "grunt-wiredep": "^2.0.0",<%if (includeJsonServer === true) { %>
+    "grunt-json-server": "^0.1.2",<% } %>
     "grunt-include-source": "^0.7.1",<%if (includeProtractor === true) { %>
     "grunt-protractor-runner": "^3.0.0",<% } %>
     "jasmine-core": "^2.3.4",
