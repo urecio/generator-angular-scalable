@@ -36,12 +36,17 @@ module.exports = yeoman.generators.Base.extend({
       message: 'Do you want to include a mocks json server?',
       default: false
     });
+    prompts.push({
+      type: 'confirm',
+      name: 'includeRestangular',
+      message: 'Do you want to include restangular?',
+      default: false
+    });
 
     this.prompt(prompts, function (props) {
       this.props = props;
       if ( props.appName ) utils.saveAppName.call(this, this.props.appName);
       if ( props.includeProtractor ) this.config.set('includeProtractor', 'true');
-      if ( props.includeJsonServer ) this.config.set('includeJsonServer', 'true');
       done();
     }.bind(this));
   },
@@ -68,7 +73,8 @@ module.exports = yeoman.generators.Base.extend({
         appName: this.appName || this.props.appName,
         includeBootstrap: this.props.includeBootstrap || false,
         includeProtractor: this.props.includeProtractor || false,
-        includeJsonServer: this.props.includeJsonServer || false
+        includeJsonServer: this.props.includeJsonServer || false,
+        includeRestangular: this.props.includeRestangular || false
       }
     );
     // copies .files like .gitignore

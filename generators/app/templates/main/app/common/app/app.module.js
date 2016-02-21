@@ -11,7 +11,8 @@
 angular
 .module('<%= appName %>', [
   'ui.router',
-  'ngSanitize',
+  'ngSanitize',<%if (includeRestangular === true) { %>
+  'restangular',<% } %>
 
   /* COMMONS */
   '<%= appName %>.cache',
