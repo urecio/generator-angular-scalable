@@ -74,6 +74,7 @@ There is a grunt task to setup a constant with the base url of those APIs, so th
 
 * Bootstrap
 * Protractor
+* Json server (for mocks)
 
 ### Other notes
 
