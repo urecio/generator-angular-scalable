@@ -1,5 +1,5 @@
 # generator-angular-scalable [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> Scaffolding for large apps
+> Scaffolding for large apps 
 
 ## Installation
 
